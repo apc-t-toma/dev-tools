@@ -59,24 +59,30 @@ gpg --export-ownertrust > import-files/.gnupg/ownertrust.txt
 
 ### 3. ベースイメージのビルドと起動
 
+以下のコマンドから目的に応じて選択して実行してください：
+
 ```bash
-# ベースイメージをビルドして起動
+# 通常のビルドと起動
 docker compose up --build
 
-# バックグラウンドで起動
+# バックグラウンドで起動したい場合
 docker compose up --build -d
 
-# ビルドのログを詳細表示
+# ビルドのログを詳細表示したい場合
 docker compose --progress plain build
 
-# キャッシュを無効にしてビルド
+# キャッシュを無効にしてクリーンビルドしたい場合
 docker compose build --no-cache
+```
 
+### 4. コンテナへの接続
+
+```bash
 # コンテナに接続
 docker compose exec workspace bash
 ```
 
-### 4. 設定のエクスポート（オプション）
+### 5. 設定のエクスポート（オプション）
 
 コンテナ内で使用されているGit、SSH、GPGの設定をworkspaceディレクトリにエクスポートできます。ホスト側でも同じ設定（Git設定、SSH接続、GPG署名など）を利用したい場合に、以下の手順を参考にしてください。
 
