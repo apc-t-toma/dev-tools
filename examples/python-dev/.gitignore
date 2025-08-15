@@ -1,0 +1,12 @@
+# All ignore
+*
+!.gitignore
+
+!/dev-scripts/
+!/dev-scripts/*.sh
+!/compose.yaml
+!/Dockerfile
+!/README.md
+!/requirements.txt
+!/sample_app.py
+!/test_sample_app.py

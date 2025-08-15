@@ -1,0 +1,22 @@
+name: dev-tools
+
+services:
+
+  workspace:
+    build:
+      args:
+        EMAIL: ${EMAIL}
+        NAME: ${NAME}
+    container_name: workspace
+    image: dev-tools-workspace:latest
+    secrets:
+      - export_env
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./export:/export:ro
+      - ./workspace:/workspace
+
+secrets:
+  export_env:
+    file: ./.env

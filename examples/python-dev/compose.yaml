@@ -1,0 +1,11 @@
+name: python-dev-environment
+
+services:
+  python-dev:
+    build:
+      context: .
+    container_name: python-dev
+    image: python-dev-workspace:latest
+    stdin_open: true
+    volumes:
+      - .:/workspace

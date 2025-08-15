@@ -1,0 +1,38 @@
+# All ignore - ホワイトリスト方式
+*
+
+# Git管理ファイル
+!.gitignore
+
+# DevContainer設定
+!/.devcontainer/
+!/.devcontainer/compose.yaml
+!/.devcontainer/devcontainer.json
+!/.devcontainer/Dockerfile
+!/.devcontainer/post-create.sh
+
+# ソースコード
+!/src/
+!/src/**/*.ts
+!/src/**/*.tsx
+!/src/**/*.css
+
+# コード品質設定
+!/.prettierrc
+
+# プロジェクト設定ファイル
+!/.tool-versions
+!/next-env.d.ts
+!/next.config.js
+!/package.json
+!/postcss.config.js
+!/tailwind.config.js
+!/tsconfig.json
+
+# Next.js関連（静的アセット）
+!/public/
+!/public/**/
+!/public/**/*
+
+# ドキュメント
+!/README.md

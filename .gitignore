@@ -1,0 +1,17 @@
+# All ignore
+*
+!*.md
+!*.sh
+!.gitignore
+
+!/.github/
+!/export/
+!/examples/
+!/import-files/
+!/import-files/.gitkeep
+!/script/
+
+!/.dockerignore
+!/.env.example
+!/compose.yaml
+!/Dockerfile

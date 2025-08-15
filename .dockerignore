@@ -1,0 +1,14 @@
+# 全除外
+*
+
+# 必要なディレクトリとスクリプトだけ追加
+!/script/
+!/script/*
+!/import-files/
+!/import-files/**/
+!/import-files/**/*
+/import-files/.gitkeep
+
+# Dockerfileとcompose.yamlは必要
+!/Dockerfile
+!/compose.yaml

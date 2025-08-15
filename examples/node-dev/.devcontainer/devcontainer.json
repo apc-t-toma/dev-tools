@@ -1,0 +1,34 @@
+{
+    // General devcontainer.json properties
+    "name": "Node.js Development Environment",
+    // 開発に便利なVS Code拡張機能
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.vscode-typescript-next",
+                "bradlc.vscode-tailwindcss",
+                "esbenp.prettier-vscode",
+                "ms-vscode.vscode-eslint",
+                "ms-vscode.vscode-json",
+                "PKief.material-icon-theme",
+                "formulahendry.auto-rename-tag",
+                "christian-kohler.path-intellisense",
+                "ms-vscode.vscode-npm-script"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "editor.formatOnSave": true,
+                "editor.defaultFormatter": "esbenp.prettier-vscode",
+                "typescript.preferences.includePackageJsonAutoImports": "auto",
+                "npm.enableRunFromFolder": true
+            }
+        }
+    },
+    // Docker Compose specific properties
+    "dockerComposeFile": "compose.yaml",
+    "service": "node-dev",
+    "workspaceFolder": "/workspace",
+    // Lifecycle scripts
+    // コンテナ作成後に実行するコマンド
+    "postCreateCommand": "bash .devcontainer/post-create.sh",
+}

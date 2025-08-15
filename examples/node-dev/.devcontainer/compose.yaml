@@ -1,0 +1,24 @@
+name: node-dev-environment
+
+services:
+  node-dev:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    container_name: node-dev
+    environment:
+      - NODE_ENV=development
+    image: node-dev-workspace:latest
+    ports:
+      - '3000:3000' # Next.js
+      # - "5173:5173" # Vite (将来的な拡張用)
+      # - "8080:8080" # 汎用開発サーバー (将来的な拡張用)
+    stdin_open: true
+    tty: true
+    volumes:
+      - ..:/workspace
+      - node_modules:/workspace/node_modules # node_modulesの永続化
+    working_dir: /workspace
+
+volumes:
+  node_modules:
