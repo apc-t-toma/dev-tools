@@ -161,6 +161,63 @@ gpg --import-ownertrust workspace/.gnupg/ownertrust-*.txt
 - **Terraform** - インフラストラクチャ・アズ・コード
 - **asdf** - 言語・ツールのバージョン管理
 
+## ツールのカスタマイズ
+
+このベースイメージでは、プロジェクトの要件に応じてプリインストールするツールをカスタマイズできます。
+
+### セットアップスクリプトの変更
+
+各ツールのインストールと設定は、`script/`ディレクトリ内の個別のシェルスクリプトで管理されています：
+
+- `git-setup.sh` - Git の設定とインストール
+- `ssh-setup.sh` - SSH の設定
+- `gpg-setup.sh` - GPG の設定
+- `azure-cli-setup.sh` - Azure CLI のインストール
+- `kubectl-setup.sh` - kubectl のインストール
+- `terraform-setup.sh` - Terraform のインストール
+- `asdf-setup.sh` - asdf のインストール
+
+**重要**: 各ツールに必要なパッケージは、Dockerfileではなく各シェルスクリプト内で`apt-get install`を実行してください。これにより依存関係を適切に分離し、不要なツールをコメントアウトで簡単に除外できます。
+
+### カスタマイズ方法
+
+#### 不要なツールの除外
+
+特定のツールが不要な場合は、`Dockerfile`内の該当するスクリプト実行行をコメントアウトできます：
+
+```dockerfile
+# Azure CLIのインストール
+# /tmp/script/azure-cli-setup.sh
+
+# kubectlのインストール
+# /tmp/script/kubectl-setup.sh
+```
+
+#### 追加ツールのインストール
+
+新しいツールを追加したい場合は：
+
+1. `script/`ディレクトリに新しいセットアップスクリプトを作成
+2. `Dockerfile`内でそのスクリプトを実行するよう追加
+
+#### 既存スクリプトの変更
+
+既存のスクリプトを編集して、特定のバージョンのインストールや追加設定を行うことも可能です。例えば、特定のバージョンのTerraformをインストールしたい場合は、`terraform-setup.sh`を編集してください。
+
+### カスタマイズ例
+
+```dockerfile
+# 例：必要最小限の構成（Git、SSH、GPGのみ）
+/tmp/script/git-setup.sh
+/tmp/script/ssh-setup.sh
+/tmp/script/gpg-setup.sh
+# Azure関連ツールをスキップ
+# /tmp/script/azure-cli-setup.sh
+# /tmp/script/kubectl-setup.sh
+# /tmp/script/terraform-setup.sh
+/tmp/script/asdf-setup.sh
+```
+
 ## 自動セットアップ機能
 
 このベースイメージは、イメージビルド時に以下の自動セットアップを実行します：
