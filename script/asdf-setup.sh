@@ -36,11 +36,11 @@ echo '. <(asdf completion bash 2>/dev/null || true)' >> /etc/bash.bashrc
 
 # インストール確認
 if command -v asdf &> /dev/null; then
-    INSTALLED_VERSION=$(asdf version | head -n1 | awk '{print $1}')
-    echo "✅ asdf のインストールが完了しました: v${INSTALLED_VERSION}"
+  echo "✅ asdf のインストールが完了しました:"
+  asdf version
 else
-    echo "❌ asdf のインストールに失敗しました"
-    exit 1
+  echo "❌ asdf のインストールに失敗しました"
+  exit 1
 fi
 
 echo "🎉 === asdf セットアップ完了 ==="

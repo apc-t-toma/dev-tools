@@ -11,7 +11,6 @@ echo "🚀 === Azure CLI セットアップ開始 ==="
 echo "必要なパッケージをインストール中..."
 apt-get install -qq -y \
   curl \
-  jq \
   sudo
 
 # Azure CLIのインストール
@@ -20,11 +19,11 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 # インストール確認
 if command -v az &> /dev/null; then
-    AZ_VERSION=$(az version --output json | jq -r '."azure-cli"')
-    echo "✅ Azure CLI のインストールが完了しました: v${AZ_VERSION}"
+  echo "✅ Azure CLI のインストールが完了しました:"
+  az version
 else
-    echo "❌ Azure CLI のインストールに失敗しました"
-    exit 1
+  echo "❌ Azure CLI のインストールに失敗しました"
+  exit 1
 fi
 
 echo "🎉 === Azure CLI セットアップ完了 ==="

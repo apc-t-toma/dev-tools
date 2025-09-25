@@ -37,15 +37,15 @@ chmod 644 /etc/apt/sources.list.d/kubernetes.list
 # パッケージインデックスを更新してkubectlをインストール
 echo "kubectl をインストール中..."
 apt-get update
-apt-get install -y kubectl
+apt-get install -qq -y kubectl
 
 # インストール確認
 if command -v kubectl &> /dev/null; then
-    INSTALLED_VERSION=$(kubectl version --client --output=yaml | grep -E 'gitVersion:' | cut -d'"' -f2)
-    echo "✅ kubectl のインストールが完了しました: ${INSTALLED_VERSION}"
+  echo "✅ kubectl のインストールが完了しました:"
+  kubectl version --client
 else
-    echo "❌ kubectl のインストールに失敗しました"
-    exit 1
+  echo "❌ kubectl のインストールに失敗しました"
+  exit 1
 fi
 
 echo "🎉 === kubectl セットアップ完了 ==="

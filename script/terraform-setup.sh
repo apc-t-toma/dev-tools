@@ -11,7 +11,6 @@ echo "🚀 === Terraform セットアップ開始 ==="
 echo "必要なパッケージをインストール中..."
 apt-get install -qq -y \
   gnupg \
-  jq \
   lsb-release \
   sudo \
   wget
@@ -30,15 +29,15 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashi
 # パッケージインデックスを更新してTerraformをインストール
 echo "Terraform をインストール中..."
 apt-get update
-apt-get install -y terraform
+apt-get install -qq -y terraform
 
 # インストール確認
 if command -v terraform &> /dev/null; then
-    TERRAFORM_VERSION=$(terraform version -json | jq -r '.terraform_version')
-    echo "✅ Terraform のインストールが完了しました: v${TERRAFORM_VERSION}"
+  echo "✅ Terraform のインストールが完了しました:"
+  terraform version
 else
-    echo "❌ Terraform のインストールに失敗しました"
-    exit 1
+  echo "❌ Terraform のインストールに失敗しました"
+  exit 1
 fi
 
 echo "🎉 === Terraform セットアップ完了 ==="
