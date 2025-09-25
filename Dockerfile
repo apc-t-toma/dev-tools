@@ -53,6 +53,9 @@ echo -e "\n\033[1;46;30m▓▓▓ 🔧 各種ツールのインストールと�
 # asdfのインストール
 /tmp/script/asdf-setup.sh
 
+# libicu74 のインストール
+/tmp/script/install-libicu74.sh
+
 # 不要なパッケージを削除
 apt-get autoremove -y
 apt-get clean
