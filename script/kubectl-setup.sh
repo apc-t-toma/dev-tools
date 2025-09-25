@@ -17,7 +17,7 @@ apt-get install -qq -y \
 # 最新の安定版バージョンを取得
 echo "kubectl の最新バージョンを確認中..."
 KUBECTL_VERSION=$(curl -sL https://dl.k8s.io/release/stable.txt)
-KUBECTL_VERSION_SHORT=$(echo $KUBECTL_VERSION | cut -d'.' -f1,2)
+KUBECTL_VERSION_SHORT=$(echo "$KUBECTL_VERSION" | cut -d'.' -f1,2)
 
 echo "kubectl バージョン: $KUBECTL_VERSION"
 echo "リポジトリバージョン: $KUBECTL_VERSION_SHORT"
@@ -26,7 +26,7 @@ echo "リポジトリバージョン: $KUBECTL_VERSION_SHORT"
 echo "Kubernetes 公開署名キーをダウンロード中..."
 mkdir -p /etc/apt/keyrings
 chmod 755 /etc/apt/keyrings
-curl -fsSL https://pkgs.k8s.io/core:/stable:/${KUBECTL_VERSION_SHORT}/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/"${KUBECTL_VERSION_SHORT}"/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 # Kubernetesのaptリポジトリを追加

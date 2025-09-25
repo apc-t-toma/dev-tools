@@ -19,7 +19,7 @@ ASDF_VERSION=$(curl -s https://api.github.com/repos/asdf-vm/asdf/releases/latest
 echo "asdf バージョン: $ASDF_VERSION"
 
 echo "asdf をダウンロード中..."
-curl -fsSL https://github.com/asdf-vm/asdf/releases/download/${ASDF_VERSION}/asdf-${ASDF_VERSION}-linux-amd64.tar.gz -o asdf.tar.gz
+curl -fsSL https://github.com/asdf-vm/asdf/releases/download/"${ASDF_VERSION}"/asdf-"${ASDF_VERSION}"-linux-amd64.tar.gz -o asdf.tar.gz
 
 echo "asdf をインストール中..."
 tar -xzf asdf.tar.gz -C /usr/local/bin
