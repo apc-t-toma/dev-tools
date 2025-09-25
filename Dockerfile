@@ -35,6 +35,9 @@ echo -e "\n\033[1;46;30m▓▓▓ 🔧 各種ツールのインストールと�
 # Gitのインストール
 /tmp/script/git-setup.sh
 
+# GitHub CLIのインストール
+/tmp/script/github-cli-setup.sh
+
 # SSHのセットアップ
 /tmp/script/ssh-setup.sh
 
