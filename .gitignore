@@ -5,6 +5,7 @@
 !.gitignore
 
 !/.github/
+!/.github/instructions/
 !/.vscode/
 !/.vscode/settings.json
 !/export/
