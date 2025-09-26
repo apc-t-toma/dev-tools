@@ -5,12 +5,15 @@
 !.gitignore
 
 !/.github/
+!/.vscode/
+!/.vscode/settings.json
 !/export/
 !/examples/
 !/import-files/
 !/import-files/.gitkeep
 !/script/
 
+!/.copilot-commit-message-instructions.md
 !/.dockerignore
 !/.env.example
 !/compose.yaml
