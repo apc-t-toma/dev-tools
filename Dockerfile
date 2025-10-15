@@ -32,17 +32,23 @@ echo -e "\n\033[1;44;97m▓▓▓ 🚀 開発環境セットアップ開始 🚀
 echo -e "\n\033[1;46;30m▓▓▓ 🔧 各種ツールのインストールと設定 🔧 ▓▓▓\033[0m\n"
 # 以降のインストールは、コメントアウトやスクリプトの追加・変更など、必要に応じてカスタマイズしてください。
 
+# SSHのセットアップ
+/tmp/script/ssh-setup.sh
+
+# GPGのセットアップ
+/tmp/script/gpg-setup.sh
+
 # Gitのインストール
 /tmp/script/git-setup.sh
 
 # GitHub CLIのインストール
 /tmp/script/github-cli-setup.sh
 
-# SSHのセットアップ
-/tmp/script/ssh-setup.sh
+# pnpmのインストール
+/tmp/script/pnpm-setup.sh
 
-# GPGのセットアップ
-/tmp/script/gpg-setup.sh
+# libicu74 のインストール
+/tmp/script/install-libicu74.sh
 
 # Azure CLIのインストール
 /tmp/script/azure-cli-setup.sh
@@ -55,9 +61,6 @@ echo -e "\n\033[1;46;30m▓▓▓ 🔧 各種ツールのインストールと�
 
 # asdfのインストール
 /tmp/script/asdf-setup.sh
-
-# libicu74 のインストール
-/tmp/script/install-libicu74.sh
 
 # 不要なパッケージを削除
 apt-get autoremove -y
