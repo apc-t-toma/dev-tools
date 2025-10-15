@@ -33,34 +33,34 @@ echo -e "\n\033[1;46;30m▓▓▓ 🔧 各種ツールのインストールと�
 # 以降のインストールは、コメントアウトやスクリプトの追加・変更など、必要に応じてカスタマイズしてください。
 
 # SSHのセットアップ
-/tmp/script/ssh-setup.sh
+# /tmp/script/ssh-setup.sh
 
 # GPGのセットアップ
-/tmp/script/gpg-setup.sh
+# /tmp/script/gpg-setup.sh
 
 # Gitのインストール
-/tmp/script/git-setup.sh
+# /tmp/script/git-setup.sh
 
 # GitHub CLIのインストール
-/tmp/script/github-cli-setup.sh
+# /tmp/script/github-cli-setup.sh
 
 # pnpmのインストール
-/tmp/script/pnpm-setup.sh
+# /tmp/script/pnpm-setup.sh
 
 # libicu74 のインストール
-/tmp/script/install-libicu74.sh
+# /tmp/script/install-libicu74.sh
 
 # Azure CLIのインストール
-/tmp/script/azure-cli-setup.sh
+# /tmp/script/azure-cli-setup.sh
 
 # kubectlのインストール
-/tmp/script/kubectl-setup.sh
+# /tmp/script/kubectl-setup.sh
 
 # Terraformのインストール
-/tmp/script/terraform-setup.sh
+# /tmp/script/terraform-setup.sh
 
 # asdfのインストール
-/tmp/script/asdf-setup.sh
+# /tmp/script/asdf-setup.sh
 
 # 不要なパッケージを削除
 apt-get autoremove -y

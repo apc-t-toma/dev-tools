@@ -153,78 +153,80 @@ gpg --import-ownertrust workspace/.gnupg/ownertrust-*.txt
 
 ## 含まれるツール
 
-- **Git** - バージョン管理（GPG署名対応）
-- **SSH** - セキュア接続（ホストキー継承対応）
-- **GPG** - 暗号化・署名（ホストキー継承対応）
-- **Azure CLI** - Azure管理とリソース操作
-- **kubectl** - Kubernetes管理
-- **Terraform** - インフラストラクチャ・アズ・コード
-- **asdf** - 言語・ツールのバージョン管理
+`script/` ディレクトリの各セットアップスクリプトを `Dockerfile` から呼び出しています。</br>
+デフォルトでは `Dockerfile` 内のセットアップ行がすべてコメントアウトされており、追加ツールはインストールされません（素の Ubuntu + タイムゾーン設定のみ）。</br>
+行頭の `#` を外すとそのツールがインストールされます。
 
-## ツールのカスタマイズ
+### 利用可能なオプションツール一覧
 
-このベースイメージでは、プロジェクトの要件に応じてプリインストールするツールをカスタマイズできます。
+- **SSH** (`ssh-setup.sh`) - SSH キー生成 / ホストからの継承
+- **GPG** (`gpg-setup.sh`) - GPG キー生成 / ホストからのインポート
+- **Git** (`git-setup.sh`) - Git / Git LFS 設定（GPG署名有効化を含む）
+- **GitHub CLI** (`github-cli-setup.sh`) - `gh` コマンド
+- **pnpm** (`pnpm-setup.sh`) - Node.js 用パッケージマネージャ（スタンドアロン）
+- **libicu74** (`install-libicu74.sh`) - ICU 74
+- **Azure CLI** (`azure-cli-setup.sh`) - Azure リソース操作
+- **kubectl** (`kubectl-setup.sh`) - Kubernetes クラスタ操作
+- **Terraform** (`terraform-setup.sh`) - IaC ツール
+- **asdf** (`asdf-setup.sh`) - 複数言語 / ツールバージョン管理
 
-### セットアップスクリプトの変更
+#### カスタマイズ（例）
 
-各ツールのインストールと設定は、`script/`ディレクトリ内の個別のシェルスクリプトで管理されています：
-
-- `git-setup.sh` - Git の設定とインストール
-- `ssh-setup.sh` - SSH の設定
-- `gpg-setup.sh` - GPG の設定
-- `azure-cli-setup.sh` - Azure CLI のインストール
-- `kubectl-setup.sh` - kubectl のインストール
-- `terraform-setup.sh` - Terraform のインストール
-- `asdf-setup.sh` - asdf のインストール
-
-**重要**: 各ツールに必要なパッケージは、Dockerfileではなく各シェルスクリプト内で`apt-get install`を実行してください。これにより依存関係を適切に分離し、不要なツールをコメントアウトで簡単に除外できます。
-
-### カスタマイズ方法
-
-#### 不要なツールの除外
-
-特定のツールが不要な場合は、`Dockerfile`内の該当するスクリプト実行行をコメントアウトできます：
+以下は Git / Azure CLI / Terraform をインストールする例:
 
 ```dockerfile
-# Azure CLIのインストール
-# /tmp/script/azure-cli-setup.sh
+# SSH（無効）
+# /tmp/script/ssh-setup.sh
 
-# kubectlのインストール
-# /tmp/script/kubectl-setup.sh
-```
+# GPG（無効）
+# /tmp/script/gpg-setup.sh
 
-#### 追加ツールのインストール
-
-新しいツールを追加したい場合は：
-
-1. `script/`ディレクトリに新しいセットアップスクリプトを作成
-2. `Dockerfile`内でそのスクリプトを実行するよう追加
-
-#### 既存スクリプトの変更
-
-既存のスクリプトを編集して、特定のバージョンのインストールや追加設定を行うことも可能です。例えば、特定のバージョンのTerraformをインストールしたい場合は、`terraform-setup.sh`を編集してください。
-
-### カスタマイズ例
-
-```dockerfile
-# 例：必要最小限の構成（Git、SSH、GPGのみ）
+# Git（有効化）
 /tmp/script/git-setup.sh
-/tmp/script/ssh-setup.sh
-/tmp/script/gpg-setup.sh
-# Azure関連ツールをスキップ
-# /tmp/script/azure-cli-setup.sh
+
+# GitHub CLI（無効）
+# /tmp/script/github-cli-setup.sh
+
+# pnpm（無効）
+# /tmp/script/pnpm-setup.sh
+
+# libicu74（無効）
+# /tmp/script/install-libicu74.sh
+
+# Azure CLI（有効化）
+/tmp/script/azure-cli-setup.sh
+
+# kubectl（無効）
 # /tmp/script/kubectl-setup.sh
-# /tmp/script/terraform-setup.sh
-/tmp/script/asdf-setup.sh
+
+# Terraform（有効化）
+/tmp/script/terraform-setup.sh
+
+# asdf（無効）
+# /tmp/script/asdf-setup.sh
 ```
 
-## 自動セットアップ機能
+### ツールの拡張と編集
 
-このベースイメージは、イメージビルド時に以下の自動セットアップを実行します：
+追加ツールのセットアップは `script/` 配下の独立したスクリプトで管理します。
 
-1. **ツールのインストール（ビルド時）**: Git、SSH、GPG、Azure CLI、kubectl、Terraform、asdfなどの開発ツール
-2. **設定の適用（ビルド時）**: 指定されたメールアドレスと名前でのGit設定、（オプション）ホストキーの継承
-3. **設定のエクスポート（手動実行）**: `.env`ファイルの設定を基に、コンテナ内の設定をworkspaceディレクトリへエクスポート
+**注意点（ガイドライン）**:
+
+- Dockerfile に直接 `apt-get install` を足さない（依存は各スクリプト内で完結）
+- スクリプトは単体で再実行しても壊れない冪等性を維持
+- `set -euo pipefail` で失敗検知
+
+#### 既存スクリプトの編集（例）
+
+`git-setup.sh` に独自のグローバル設定（例: 署名キー指定 / デフォルトブランチ名 / 差分表示改善）を追加する例:
+
+```diff
+@@
+ git config --global user.name "$NAME"
++git config --global init.defaultBranch main
++git config --global diff.renames true
++# git config --global user.signingkey ABCDEF1234567890  # enable after key import
+```
 
 ## 開発環境サンプルの使用
 
