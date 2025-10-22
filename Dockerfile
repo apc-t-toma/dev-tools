@@ -47,6 +47,9 @@ echo -e "\n\033[1;46;30m▓▓▓ 🔧 各種ツールのインストールと�
 # pnpmのインストール
 # /tmp/script/pnpm-setup.sh
 
+# uvのインストール
+# /tmp/script/uv-setup.sh
+
 # libicu74 のインストール
 # /tmp/script/install-libicu74.sh
 
