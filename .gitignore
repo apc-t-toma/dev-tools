@@ -16,6 +16,7 @@
 
 !/.copilot-commit-message-instructions.md
 !/.dockerignore
+!/.editorconfig
 !/.env.example
 !/compose.yaml
 !/Dockerfile
