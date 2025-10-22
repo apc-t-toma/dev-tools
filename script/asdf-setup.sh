@@ -32,7 +32,7 @@ echo "asdf の初期設定中..."
 echo 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"' >> ~/.bash_profile
 
 # bash補完の設定
-echo '. <(asdf completion bash 2>/dev/null || true)' >> /etc/bash.bashrc
+echo '. <(asdf completion bash)' >> /etc/bash.bashrc
 
 # インストール確認
 if command -v asdf &> /dev/null; then
