@@ -25,7 +25,6 @@ else
   echo "名前: $NAME"
 
   # gitの設定
-  git config --global commit.gpgsign true
   git config --global core.autocrlf false
   git config --global core.fscache true
   git config --global core.quotepath false
@@ -36,11 +35,24 @@ else
   git config --global user.email "$EMAIL"
   git config --global user.name "$NAME"
 
-  # git-lfsのインストール
-  echo "Git LFS を初期化中..."
-  git lfs install
+  # GPG署名キーの取得と設定
+  echo "GPG署名キーを取得中..."
+  GPG_KEY_ID=$(gpg --list-secret-keys --keyid-format=long --with-colons | grep '^sec:' | head -n1 | cut -d':' -f5)
+
+  if [ -n "$GPG_KEY_ID" ]; then
+    echo "GPG署名キーID: $GPG_KEY_ID"
+    git config --global commit.gpgsign true
+    git config --global user.signingkey "$GPG_KEY_ID"
+    echo "✅ GPG署名キーを設定しました"
+  else
+    echo "⚠️  GPG秘密キーが見つかりません。GPGセットアップを確認してください"
+  fi
 
   echo "✅ Git セットアップが完了しました"
 fi
+
+# git-lfsのインストール（共通処理）
+echo "Git LFS を初期化中..."
+git lfs install
 
 echo "🎉 === Git セットアップ完了 ==="
