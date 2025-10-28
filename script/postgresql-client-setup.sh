@@ -9,7 +9,8 @@ echo "🚀 === PostgreSQL Client セットアップ開始 ==="
 
 # PostgreSQL Clientのインストール
 echo "PostgreSQL Client をインストール中..."
-apt-get install -qq -y postgresql-client
+apt-get install -qq -y \
+  postgresql-client
 
 # インストール確認
 if command -v psql &> /dev/null; then

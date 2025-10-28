@@ -9,7 +9,8 @@ echo "🚀 === libicu74 インストール開始 ==="
 
 # 必要なパッケージのインストール
 echo "libicu74 をインストール中..."
-apt-get install -qq -y libicu74
+apt-get install -qq -y \
+  libicu74
 
 echo "✅ libicu74 のインストールが完了しました"
 
