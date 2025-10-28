@@ -29,6 +29,7 @@ else
   git config --global core.fscache true
   git config --global core.quotepath false
   git config --global core.symlinks false
+  git config --global core.editor "code --wait"
   git config --global fetch.prune true
   git config --global fetch.pruneTags true
   git config --global pull.rebase true
