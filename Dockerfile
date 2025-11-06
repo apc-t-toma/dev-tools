@@ -66,7 +66,7 @@ echo -e "\n\033[1;46;30m▓▓▓ 🔧 各種ツールのインストールと�
 # /tmp/script/asdf-setup.sh
 
 # PostgreSQLクライアントのインストール
-#/tmp/script/psql-client-setup.sh
+# /tmp/script/postgresql-client-setup.sh
 
 # 不要なパッケージを削除
 apt-get autoremove -y
