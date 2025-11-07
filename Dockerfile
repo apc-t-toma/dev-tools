@@ -47,6 +47,9 @@ echo -e "\n\033[1;46;30m▓▓▓ 🔧 各種ツールのインストールと�
 # GitHub CLIのインストール
 # /tmp/script/github-cli-setup.sh
 
+# Dockerのインストール
+# /tmp/script/docker-setup.sh
+
 # pnpmのインストール
 # /tmp/script/pnpm-setup.sh
 
