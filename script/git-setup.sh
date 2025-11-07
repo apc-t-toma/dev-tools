@@ -12,10 +12,11 @@ echo "必要なパッケージをインストール中..."
 apt-get install -qq -y \
   git \
   git-lfs \
+  gnupg \
   rsync
 
 # ホストの.gitconfigファイルの確認とコピー
-if [ -f "/tmp/host/.gitconfig" ] && [ -s "/tmp/host/.gitconfig" ]; then
+if [ -f /tmp/host/.gitconfig ] && [ -s /tmp/host/.gitconfig ]; then
   echo "ホストの.gitconfigファイルが見つかりました。コピー中..."
   rsync -aqz /tmp/host/.gitconfig ~/.gitconfig
   echo "✅ ホストの.gitconfigファイルをコピーしました"
@@ -36,17 +37,16 @@ else
   git config --global user.email "$EMAIL"
   git config --global user.name "$NAME"
 
-  # GPG署名キーの取得と設定
-  echo "GPG署名キーを取得中..."
-  GPG_KEY_ID=$(gpg --list-secret-keys --keyid-format=long --with-colons | grep '^sec:' | head -n1 | cut -d':' -f5)
-
-  if [ -n "$GPG_KEY_ID" ]; then
+  if [ -d ~/.gnupg ]; then
+    # GPG署名キーの取得と設定
+    echo "GPG署名キーを取得中..."
+    GPG_KEY_ID=$(gpg --list-secret-keys --keyid-format=long --with-colons | grep '^sec:' | head -n1 | cut -d':' -f5)
     echo "GPG署名キーID: $GPG_KEY_ID"
     git config --global commit.gpgsign true
     git config --global user.signingkey "$GPG_KEY_ID"
     echo "✅ GPG署名キーを設定しました"
   else
-    echo "⚠️  GPG秘密キーが見つかりません。GPGセットアップを確認してください"
+    echo "⚠️  ~/.gnupgディレクトリが見つかりません。GPGセットアップを確認してください"
   fi
 
   echo "✅ Git セットアップが完了しました"
