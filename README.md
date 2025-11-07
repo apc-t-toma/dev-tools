@@ -59,20 +59,26 @@ gpg --export-ownertrust > import-files/.gnupg/ownertrust.txt
 
 ### 3. ベースイメージのビルドと起動
 
-以下のコマンドから目的に応じて選択して実行してください：
+以下のコマンドから目的に応じて選択、組み合わせて実行してください：
 
 ```bash
-# 通常のビルドと起動
-docker compose up --build
+# 通常のビルド
+docker compose build
 
-# バックグラウンドで起動したい場合
-docker compose up --build -d
+# イメージを強制的にプルしたい場合
+docker compose build --pull
+
+# キャッシュを無効にしてクリーンビルドしたい場合
+docker compose build --no-cache
 
 # ビルドのログを詳細表示したい場合
 docker compose --progress plain build
 
-# キャッシュを無効にしてクリーンビルドしたい場合
-docker compose build --no-cache
+# ビルドと起動
+docker compose up --build
+
+# バックグラウンドで起動したい場合
+docker compose up --build -d
 ```
 
 ### 4. コンテナへの接続
