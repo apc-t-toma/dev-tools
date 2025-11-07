@@ -36,7 +36,7 @@ chmod 644 /etc/apt/sources.list.d/kubernetes.list
 
 # パッケージインデックスを更新してkubectlをインストール
 echo "kubectl をインストール中..."
-apt-get update
+apt-get update -qq
 apt-get install -qq -y kubectl
 
 # インストール確認

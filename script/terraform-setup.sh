@@ -28,7 +28,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashi
 
 # パッケージインデックスを更新してTerraformをインストール
 echo "Terraform をインストール中..."
-apt-get update
+apt-get update -qq
 apt-get install -qq -y terraform
 
 # インストール確認

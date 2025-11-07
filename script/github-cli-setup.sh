@@ -14,10 +14,6 @@ apt-get install -qq -y \
   curl \
   sudo
 
-# wgetが利用可能か確認し、必要に応じてインストール
-echo "wget の確認とインストール中..."
-(type -p wget >/dev/null || (apt-get update && apt-get install -y wget))
-
 # GitHub CLI GPGキーと署名のセットアップ
 echo "GitHub CLI GPGキーをセットアップ中..."
 sudo mkdir -p -m 755 /etc/apt/keyrings
@@ -33,7 +29,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubc
 
 # パッケージインデックスを更新してGitHub CLIをインストール
 echo "GitHub CLI をインストール中..."
-apt-get update
+apt-get update -qq
 apt-get install -qq -y gh
 
 # インストール確認
