@@ -12,19 +12,18 @@ echo "必要なパッケージをインストール中..."
 apt-get install -qq -y \
   gnupg \
   lsb-release \
-  sudo \
   wget
 
 # HashiCorpの公開署名キーをダウンロード
 echo "HashiCorp 公開署名キーをダウンロード中..."
-wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+wget -O - https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 
 # HashiCorpのaptリポジトリを追加
 echo "HashiCorp aptリポジトリを追加中..."
 UBUNTU_CODENAME=$(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs)
 echo "Ubuntu コードネーム: $UBUNTU_CODENAME"
 
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $UBUNTU_CODENAME main" | tee /etc/apt/sources.list.d/hashicorp.list
 
 # パッケージインデックスを更新してTerraformをインストール
 echo "Terraform をインストール中..."

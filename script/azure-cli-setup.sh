@@ -10,12 +10,11 @@ echo "🚀 === Azure CLI セットアップ開始 ==="
 # 必要なパッケージのインストール
 echo "必要なパッケージをインストール中..."
 apt-get install -qq -y \
-  curl \
-  sudo
+  curl
 
 # Azure CLIのインストール
 echo "Azure CLIをインストール中..."
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 # インストール確認
 if command -v az &> /dev/null; then
