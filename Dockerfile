@@ -17,9 +17,14 @@ RUN <<EOF
 # タイムゾーンの設定
 ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
+# ロケールのセットアップ
+apt-get update -qq
+apt-get install -qq -y locales
+locale-gen ja_JP.UTF-8
+update-locale LANG=ja_JP.UTF-8
+
 # パッケージアップデート
 # 追加インストールやセットアップに必要なパッケージは、それぞれのシェルスクリプトでインストールしてください
-apt-get update -qq
 
 # スクリプトに実行権限を付与
 chmod +x /tmp/script/*.sh
@@ -85,3 +90,6 @@ find /tmp -mindepth 1 -delete
 echo -e "\n\033[1;42;30m▓▓▓ ✅ セットアップ完了 ✅ ▓▓▓\033[0m\n"
 
 EOF
+
+# ロケール環境変数の設定
+ENV LANG=ja_JP.UTF-8
