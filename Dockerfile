@@ -1,19 +1,17 @@
-FROM ubuntu
+# syntax=docker/dockerfile:1
+
+# ============================================
+# Stage 1: base
+# 共通基盤（タイムゾーン・ロケール設定）
+# ============================================
+FROM ubuntu AS base
 
 SHELL ["/bin/bash", "-euo", "pipefail", "-c"]
 
-# メールアドレスと名前をARGで受け取る
-ARG EMAIL
-ARG NAME
-
-# 作業ディレクトリを設定
-WORKDIR /workspace
-
-COPY ./import-files/ /tmp/host/
-COPY ./script/ /tmp/script/
-
-# パッケージインストールと設定
-RUN <<EOF
+# タイムゾーンとロケールの設定
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+  <<EOF
 # タイムゾーンの設定
 ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
@@ -23,13 +21,41 @@ apt-get install -qq -y locales
 locale-gen ja_JP.UTF-8
 update-locale LANG=ja_JP.UTF-8
 
-# パッケージアップデート
-# 追加インストールやセットアップに必要なパッケージは、それぞれのシェルスクリプトでインストールしてください
+# 不要なパッケージを削除
+apt-get autoremove -y
+
+EOF
+
+# ロケール環境変数の設定
+ENV LANG=ja_JP.UTF-8
+
+# ============================================
+# Stage 2: custom_install
+# パッケージの個別カスタマイズインストール
+# ============================================
+FROM base AS custom_install
+
+SHELL ["/bin/bash", "-euo", "pipefail", "-c"]
+
+# 作業ディレクトリを設定
+WORKDIR /workspace
+
+# メールアドレスと名前をARGで受け取る
+ARG EMAIL
+ARG NAME
+
+COPY ./import-files/ /tmp/host/
+COPY ./script/ /tmp/script/
+
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+  <<EOF
+echo -e "\n\033[1;44;97m▓▓▓ 🚀 開発環境セットアップ開始 🚀 ▓▓▓\033[0m\n"
+
+apt-get update -qq
 
 # スクリプトに実行権限を付与
 chmod +x /tmp/script/*.sh
-
-echo -e "\n\033[1;44;97m▓▓▓ 🚀 開発環境セットアップ開始 🚀 ▓▓▓\033[0m\n"
 
 # ビルド引数のバリデーション
 /tmp/script/validate-args.sh "$EMAIL" "$NAME"
@@ -81,8 +107,6 @@ echo -e "\n\033[1;46;30m▓▓▓ 🔧 各種ツールのインストールと�
 
 # 不要なパッケージを削除
 apt-get autoremove -y
-apt-get clean
-rm -rf /var/lib/apt/lists/*
 
 # tmpディレクトリの中身を完全削除（隠しファイルも含む）
 find /tmp -mindepth 1 -delete
@@ -90,6 +114,3 @@ find /tmp -mindepth 1 -delete
 echo -e "\n\033[1;42;30m▓▓▓ ✅ セットアップ完了 ✅ ▓▓▓\033[0m\n"
 
 EOF
-
-# ロケール環境変数の設定
-ENV LANG=ja_JP.UTF-8
