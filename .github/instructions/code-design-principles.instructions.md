@@ -1,6 +1,6 @@
 ---
 description: 'Foundational software design principles (SOLID, DRY, YAGNI, Law of Demeter, KISS, etc.) for consistent refactoring and code generation.'
-applyTo: '**'
+applyTo: 'workspace/**'
 ---
 
 # Software Design Principles Instructions
